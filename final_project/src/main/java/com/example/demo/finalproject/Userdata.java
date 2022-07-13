@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class Userdata {
-	
 	@Id
 	public String _id;
 
@@ -13,6 +12,4 @@ public class Userdata {
 	private String password;
 	private String firstname;
 	private String lastname;
-
-	
 }

@@ -1,10 +1,12 @@
 package com.example.demo.finalproject;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,22 +21,31 @@ public class FlowdataController {
 	private FlowdataRepository flowdataRepo;
 	
 	@PostMapping("/getflows")
-	public Flowdata getFlows(@Valid @RequestBody Getflowdata newflows) 
+	public List<Flowdata> getFlows(@Valid @RequestBody Getflowdata newflows) 
 	{
-		Flowdata flows = flowdataRepo.findByEmail(newflows.getEmail());
+		List<Flowdata> flows = flowdataRepo.findByEmail(newflows.getEmail());
 		return flows;
 	}
 	
 	@PostMapping("/postflows")
 	public Flowdata updateFlows(@Valid @RequestBody Flowdata newflows)
 	{ 
-		Flowdata flowsindb = flowdataRepo.findByEmail(newflows.getEmail());
-        if(flowsindb!=null) {
-    		flowdataRepo.deleteByEmail(newflows.getEmail());
     		return flowdataRepo.save(newflows);
-        }
-        else {
-    		return flowdataRepo.save(newflows);
-        }
     }
+	
+	@PutMapping("/putflows/{id}")
+	public Flowdata putFlows(@Valid @RequestBody Editflowdata payload, @PathVariable String id)
+	{
+		Flowdata flowsindb = flowdataRepo.findById(id).get();
+		flowsindb.setNodesnedges(payload.getNodesnedges());
+		flowsindb.setUpdationinfo(payload.getUpdationinfo());
+		flowsindb.setFlowname(payload.getFlowname());
+		return flowdataRepo.save(flowsindb);
+    }
+	
+	@DeleteMapping("/deleteflows/{id}")
+	public void deleteflowsbyid(@PathVariable String id)
+	{
+		flowdataRepo.deleteById(id);
+	}
 }
