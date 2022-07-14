@@ -26,14 +26,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class UserdataController {
 	
 	@Autowired
-	private UserdataRepository finaldataRepo;
+	private UserdataRepository userdataRepo;
 	
 	private String jwtSecret="EAIESB";
     private int jwtExpirationMs =1800000;
 	
 	@PostMapping("/signup")
 	public Userdata saveUser(@Valid @RequestBody Userdata newuser) {
-		return finaldataRepo.save(newuser);
+		return userdataRepo.save(newuser);
 	}
 	
 	@PostMapping("/login")
@@ -41,7 +41,7 @@ public class UserdataController {
     public Token  getUsersbyId(@Valid @RequestBody Logindata login)
 	{
         Token t= new Token();
-		Userdata user = finaldataRepo.findByEmail(login.getEmail());
+		Userdata user = userdataRepo.findByEmail(login.getEmail());
 
         if (login.getPassword().equals(user.getPassword()))
         {
@@ -64,5 +64,19 @@ public class UserdataController {
             System.out.println("Authentication Failed");
             return t;
         }
+    }
+	
+	@PutMapping("/changepassword/{email}")
+	public String changepass(@Valid @RequestBody Changepassword newpass, @PathVariable String email)
+	{
+		Userdata userindb = userdataRepo.findByEmail(email);
+		if(newpass.getOldpassword().equals(userindb.getPassword())) {
+			userindb.setPassword(newpass.getNewpassword());
+			userdataRepo.save(userindb);
+			return "successful";
+		}
+		else{
+			return "password incorrect";
+		}
     }
 }

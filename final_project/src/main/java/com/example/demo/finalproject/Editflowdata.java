@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Editflowdata {
-	private String nodesnedges;
+	private String payload;
 	private String updationinfo;
 	private String flowname;
 }

@@ -9,7 +9,7 @@ public class Flowdata {
 	@Id
 	public String _id;
 
-	private String nodesnedges;
+	private String payload;
 	private String email;
 	private String flowname;
 	private String creationinfo;

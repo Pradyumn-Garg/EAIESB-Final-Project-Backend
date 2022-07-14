@@ -37,7 +37,7 @@ public class FlowdataController {
 	public Flowdata putFlows(@Valid @RequestBody Editflowdata payload, @PathVariable String id)
 	{
 		Flowdata flowsindb = flowdataRepo.findById(id).get();
-		flowsindb.setNodesnedges(payload.getNodesnedges());
+		flowsindb.setPayload(payload.getPayload());
 		flowsindb.setUpdationinfo(payload.getUpdationinfo());
 		flowsindb.setFlowname(payload.getFlowname());
 		return flowdataRepo.save(flowsindb);
