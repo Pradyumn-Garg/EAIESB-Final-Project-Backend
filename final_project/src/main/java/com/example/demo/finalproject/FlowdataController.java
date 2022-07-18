@@ -43,9 +43,15 @@ public class FlowdataController {
 		return flowdataRepo.save(flowsindb);
     }
 	
-	@DeleteMapping("/deleteflows/{id}")
-	public void deleteflowsbyid(@PathVariable String id)
+	@DeleteMapping("/deleteflow/{id}")
+	public void deleteflowbyid(@PathVariable String id)
 	{
 		flowdataRepo.deleteById(id);
+	}
+	
+	@DeleteMapping("/deleteallflows/{email}")
+	public void deleteallflowsbyemail(@PathVariable String email)
+	{
+		flowdataRepo.deleteAllByEmail(email);
 	}
 }

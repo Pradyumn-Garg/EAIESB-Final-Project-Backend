@@ -79,4 +79,10 @@ public class UserdataController {
 			return "password incorrect";
 		}
     }
+	
+	@DeleteMapping("/deleteuser/{email}")
+	public void deleteuserbyemail(@PathVariable String email)
+	{
+		userdataRepo.deleteByEmail(email);
+	}
 }
